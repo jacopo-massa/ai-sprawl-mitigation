@@ -60,6 +60,7 @@ trustedSourceFor(browser_extension_scan, system).
 trustedSourceFor(browser_extension_scan, capability(_)).
 trustedSourceFor(browser_extension_scan, usesData(_)).
 
+% Data Loss Prevention
 trustedSourceFor(dlp_scan, usesData(_)).
 
 trustedSourceFor(data_catalog, dataClass(_)).
@@ -68,8 +69,12 @@ trustedSourceFor(control_scan, guardrail(_)).
 
 % A system observed by indirect discovery sources but not present in inventory
 % is treated as a possible shadow-AI candidate.
-discoverySource(casb_scan).
-discoverySource(browser_extension_scan).
+
+% Cloud Access Security Broker scans can reveal unsanctioned SaaS usage
+discoverySource(casb_scan). 
+% browser extensions can reveal AI tools being used by employees that haven't been formally onboarded
+discoverySource(browser_extension_scan). 
+% code repositories can reveal AI tools in development or use that haven't been formally onboarded
 discoverySource(repo_scan).
 
 % For now, freshness is permissive.
